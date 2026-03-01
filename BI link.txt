@@ -1,0 +1,939 @@
+Pr1
+Problem Statement A student has received marks in 4 subjects. He wants to predict their total & average marks (based on different scoring scenarios for Subject 4). 
+
+Marks Table 
+Subject Marks 
+Sub 1 80 
+Sub 2 75 
+Sub 3 85 
+Sub 4 70 
+Tasks C
+Calculate the total marks & average marks using Excel formulas. 
+Perform What-If Analysis (Data Table): Examine how the total marks change if the student scores different marks in Subject 4 (values: 70, 75, 80, 85, 90, 95). Goal Seek: Determine the minimum marks the student must score in Subject 4 to achieve an average of 80
+Γ£à 1∩╕ÅΓâú Calculate Average
+Γ£à 1∩╕ÅΓâú Calculate Total & Average
+Step 1: Enter Data in Excel
+Assume:
+B2 = 80
+B3 = 75
+B4 = 85
+B5 = 70
+Γ₧ñ Total Formula (in B6)
+=SUM(B2:B5)
+Result:
+310
+Γ₧ñ Average Formula (in B7)
+=AVERAGE(B2:B5)
+Result:
+77.5
+
+Γ£à 2∩╕ÅΓâú What-If Analysis ΓÇô Data Table
+≡ƒÄ» Goal: See how Total changes if Subject 4 marks change
+Test values: 70, 75, 80, 85, 90, 95
+Step 1: Create Testing Table
+D	E
+Subject 4 Marks	New Total
+70	
+75	
+80	
+85	
+90	
+95	
+In E2 type:
+= B6
+(B6 is Total cell)
+Step 2: Apply Data Table
+Select full table (D2:E8)
+Go to:
+Data ΓåÆ What-If Analysis ΓåÆ Data Table
+Column Input Cell ΓåÆ Select B5 (Subject 4 marks cell)
+Click OK
+Γ£à Output Table
+Subject 4	Total
+70	310
+75	315
+80	320
+85	325
+90	330
+95	335
+Γ£ö This shows how total changes dynamically.
+Γ£à 3∩╕ÅΓâú Goal Seek
+≡ƒÄ» Goal: Find minimum marks in Subject 4 to get Average = 80
+Step 1: Open Goal Seek
+Data ΓåÆ What-If Analysis ΓåÆ Goal Seek
+Fill:
+Option	Select
+Set Cell	B7 (Average cell)
+To Value	80
+By Changing Cell	B5 (Subject 4 marks)
+Click OK.
+
+2. Classification algorithm
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+iris = load_iris()
+X = iris.data
+y = iris.target
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+model = LogisticRegression(max_iter=200)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+This program uses the Iris dataset from scikit-learn to perform a classification task using the Logistic Regression algorithm, which is a supervised machine learning method. The dataset contains 150 samples of iris flowers with four features (sepal length, sepal width, petal length, and petal width) and three target classes (Setosa, Versicolor, Virginica). The data is divided into training (70%) and testing (30%) sets using train_test_split, where random_state=42 ensures consistent results. The model is trained using model.fit() on the training data and then used to predict test data with model.predict(). The performance is evaluated using accuracy score (overall correctness), confusion matrix (detailed class-wise prediction results), and classification report (precision, recall, and F1-score), which together measure how well the model classifies the flower species.
+
+Pr2:-
+1.Perform data visualization using Power BI on any sales data
+≡ƒôè Perform Data Visualization Using Power BI (Sales Data)
+Γ£à Step 1: Open Power BI Desktop
+Open Power BI Desktop
+Click Home ΓåÆ Get Data
+
+Γ£à Step 2: Load Sales Data
+If your file is Excel:
+Click Excel Workbook
+Browse and select your Sales file
+Click Open
+Click Transform Data (Recommended)
+If CSV file:
+Click Text/CSV
+Select file
+Click Transform Data
+Γ£à Step 3: Transform Data (Power Query Editor)
+In the Power Query Editor:
+Γ£ö Check column names
+Γ£ö Remove blank rows
+Γ£ö Change Data Types:
+Date column ΓåÆ Date
+Sales column ΓåÆ Decimal Number
+Quantity ΓåÆ Whole Number
+Γ£ö Remove unnecessary columns (Right click ΓåÆ Remove)
+Γ£ö Rename columns if needed
+After cleaning:
+≡ƒæë Click Close & Apply
+Γ£à Step 4: Create Basic Visualizations
+Now you are in Report View.
+≡ƒôè 1∩╕ÅΓâú Total Sales Card
+Select CardVisual
+Drag Sales column to Fields
+It will show total sales automatically
+
+≡ƒôè 2∩╕ÅΓâú Sales by Product (Bar Chart)
+Select Clustered Bar Chart
+Drag:
+Product ΓåÆ Axis
+Sales ΓåÆ Values
+Γ£ö Shows product-wise sales comparison
+≡ƒôè 3∩╕ÅΓâú Sales by Region (Column Chart)
+Select Clustered Column Chart
+Drag:
+Region ΓåÆ Axis
+Sales ΓåÆ Values
+≡ƒôè 4∩╕ÅΓâú Monthly Sales Trend (Line Chart)
+Select Line Chart
+Drag:
+Date ΓåÆ Axis
+Sales ΓåÆ Values
+If date hierarchy appears:
+Use Month level
+Γ£ö Shows sales trend over time
+≡ƒôè 5∩╕ÅΓâú Sales by Category (Pie Chart)
+Select Pie Chart
+Drag:
+Category ΓåÆ Legend
+Sales ΓåÆ Values
+
+2. Import the data warehouse data in Microsoft Excel and create the Pivot table and PivotChart
+PART 1: Import Data Warehouse Data into Excel
+(Assuming Data Warehouse data is stored in SQL Server / MySQL / Excel / CSV)
+≡ƒö╣ Method 1: Import from SQL Server (Common in Data Warehouse)
+Step 1:
+Open Microsoft Excel
+Step 2:
+Go to:
+Data ΓåÆ Get Data ΓåÆ From Database ΓåÆ From SQL Server Database
+Step 3:
+Enter:
+Server Name
+Database Name
+Click OK
+
+Step 4:
+Choose Authentication (Windows / Database login)
+Click Connect
+
+Step 5:
+In Navigator:
+Select required table (Example: SalesFact, ProductDim)
+Click Load
+Γ£ö Data will be imported into Excel sheet.
+
+≡ƒö╣ Method 2: Import from Excel / CSV (If DW exported file)
+For Excel File:
+Data ΓåÆ Get Data ΓåÆ From File ΓåÆ From Workbook
+For CSV:
+Data ΓåÆ From Text/CSV
+Select file ΓåÆ Click Load
+
+Γ£à PART 2: Create Pivot Table
+Step 1:
+Click anywhere inside imported data.
+Step 2:
+Go to:
+Insert ΓåÆ PivotTable
+Step 3:
+Select:
+From Table/Range
+Click OK
+Excel creates new sheet with Pivot Table layout.
+Step 4: Design Pivot Table
+Example (Sales Data):
+Drag fields as follows:
+Area	Field
+Rows	Product
+Columns	Region
+Values	Sales Amount
+Filters	Year
+Γ£ö Pivot Table created showing summarized data.
+
+Γ£à PART 3: Create Pivot Chart
+Step 1:
+Click inside Pivot Table.
+Step 2:
+Go to:
+Insert ΓåÆ PivotChart
+Step 3:
+Choose chart type:
+Column Chart
+Bar Chart
+Line Chart
+Pie Chart
+Click OK
+
+Γ£ö Pivot Chart created automatically.
+Γ£à PART 4: Format Chart
+Add Chart Title
+Enable Data Labels
+Change Chart Colors
+Adjust Legend position
+Γ£à PART 5: Refresh Data
+If Data Warehouse updates:
+
+------import CUBE----
+≡ƒôè Import a Cube in Microsoft Excel (OLAP / Data Warehouse Cube)
+(Applies to SQL Server Analysis Services ΓÇô SSAS cube)
+Γ£à Step 1: Open Excel
+Open Microsoft Excel
+Go to:
+Data ΓåÆ Get Data ΓåÆ From Database ΓåÆ From Analysis Services
+Γ£à Step 2: Connect to Analysis Services
+A connection window will open.
+Enter:
+Server Name ΓåÆ (Example: localhost or server IP)
+Choose Authentication:
+Windows Authentication (most common)
+Or Database Authentication
+Click Next
+Γ£à Step 3: Select Database & Cube
+You will see:
+Database name
+Cube name (Example: SalesCube)
+Select the required cube.
+Click Next ΓåÆ Finish
+Γ£à Step 4: Choose How to View Data
+Excel will ask:
+PivotTable Report
+PivotChart
+Only Create Connection
+Select:
+Γ£ö PivtTable Report
+Choose location:
+New Worksheet (Recommended)
+Click Ok
+Γ£à Step 5: Use Cube Fields in Pivot Table
+Now you will see:
+Dimensions (e.g., Product, Region, Time)
+Measures (e.g., Sales Amount, Quantity)
+Drag fields:
+Example:
+Area	Drag Field
+Rows	Product
+Columns	Year
+Values	Sales Amount
+
+Γ£ö Excel automatically queries cube data.
+Γ£à Step 6: Create Pivot Chart (Optional)
+Click inside Pivot Table ΓåÆ
+Go to:
+Insert ΓåÆ PivotChart
+Choose chart type (Column, Bar, Line).
+
+3. Linear Regression
+import matplotlib.pyplot as plt
+from scipy import stats
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+def myfunc(x):
+    return slope * x + intercept
+mymodel = list(map(myfunc, x))
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+Pr3:- 
+1.Write a Python program to read data from a CSV file, perform simple data analysis, andgenerate basic insights. (Use Pandas is a Python library).
+import pandas as pd
+df = pd.read_csv("/content/sales_data_sample - sales_data_sample.csv")
+print(df.head())
+print("\nTotal Sales:", df ['SALES'].sum())
+print(df.groupby('PRODUCTLINE') ["SALES"].sum())
+#summary
+df_summary =print(pd.DataFrame({"Total Sales":[df["SALES"].sum()], "Total Sales": [df
+["SALES"].sum()]}))
+
+2. Linear Regression
+import matplotlib.pyplot as plt
+from scipy import stats
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+def myfunc(x):
+    return slope * x + intercept
+mymodel = list(map(myfunc, x))
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+Pr4:-
+1.write a python program to read data from csv file containing column such as Date, product, category, sales and profit and the program should perform simple analysis
+
+import pandas as pd
+
+# Step 1: Read CSV File
+df = pd.read_csv("sales_data.csv")
+
+# Step 2: Display First 5 Rows
+print("First 5 Records:\n")
+print(df.head())
+
+# Step 3: Convert Date Column to Date Format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Step 4: Total Sales and Profit
+total_sales = df['Sales'].sum()
+total_profit = df['Profit'].sum()
+
+print("\nTotal Sales:", total_sales)
+print("Total Profit:", total_profit)
+
+# Step 5: Sales by Category
+print("\nSales by Category:")
+print(df.groupby('Category')['Sales'].sum())
+
+# Step 6: Profit by Product
+print("\nProfit by Product:")
+print(df.groupby('Product')['Profit'].sum())
+
+# Step 7: Monthly Sales Trend
+df['Month'] = df['Date'].dt.month
+print("\nMonthly Sales:")
+print(df.groupby('Month')['Sales'].sum())
+
+2.Perform the data clustering using clustering algorithm using R/Python.
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+iris = load_iris()
+X = iris.data
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+print("Cluster Centers:\n", centroids)
+print("\nCluster Labels:\n", labels)
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='rainbow', s=40)
+plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
+plt.title("K-Means Clustering (Iris Dataset)")
+plt.xlabel("Sepal Length")
+plt.ylabel("Sepal Width")
+plt.show(
+
+Pr5
+1.Problem Statement A student has received marks in 4 subjects. He wants to predict their total & average marks (based on different scoring scenarios for Subject 4). 
+
+Marks Table 
+Subject Marks 
+Sub 1 78 
+Sub 2 82 
+Sub 3 74 
+Sub 4 65 
+Tasks C
+Calculate the total marks & average marks using Excel formulas. 
+Perform What-If Analysis (Data Table): Examine how the total marks change if the student scores different marks in Subject 4 (values: 70, 75, 80, 85, 90, 95). Goal Seek: Determine the minimum marks the student must score in Subject 4 to achieve an average of 80
+Γ£à PART 1: Calculate Total & Average
+Step 1: Enter Data in Excel
+Type:
+B2 ΓåÆ 78
+B3 ΓåÆ 82
+B4 ΓåÆ 74
+B5 ΓåÆ 65
+Step 2: Calculate Total
+In cell B6, type:
+=SUM(B2:B5)
+Press Enter.
+Γ£ö Total = 299
+Step 3: Calculate Average
+In cell B7, type:
+=AVERAGE(B2:B5)
+Press Enter.
+Γ£ö Average = 74.75
+
+Γ£à PART 2: What-If Analysis (Data Table)
+≡ƒÄ» Goal: See how Total changes if Sub 4 marks change to
+65, 70, 75, 80, 85, 90
+Step 1: Create Test Table
+In column D and E write:
+D	E
+Sub 4 Marks-New Total
+65	
+70	
+75	
+80	
+85	
+90	
+Step 2: Link Total Cell
+In E2, type:
+= B6
+(B6 is total formula cell)
+Step 3: Apply Data Table
+Select range D2:E8
+Go to:
+Data ΓåÆ What-If Analysis ΓåÆ Data Table
+In dialog box:
+Row Input Cell ΓåÆ Leave blank
+Column Input Cell ΓåÆ Select B5 (Sub 4 marks cell)
+Click OK
+Γ£à Output Table
+Sub 4	Total
+65	299
+70	304
+75	309
+80	314
+85	319
+90	324
+
+Γ£ö This shows how total changes automatically.
+Γ£à PART 3: Goal Seek
+≡ƒÄ» Goal: Find minimum marks in Sub 4 to achieve Average = 80
+Step 1: Open Goal Seek
+Go to:
+Data ΓåÆ What-If Analysis ΓåÆ Goal Seek
+Fill:
+Option	Value
+Set Cell-B7 (Average cell)
+To Value-80
+By Changing Cell-B5 (Sub 4 marks)
+Click OK.
+
+2. Linear Regression
+import matplotlib.pyplot as plt
+from scipy import stats
+x = [5,7,8,7,2,17,2,9,4,11,12,9,6]
+y = [99,86,87,88,111,86,103,87,94,78,77,85,86]
+slope, intercept, r, p, std_err = stats.linregress(x, y)
+def myfunc(x):
+    return slope * x + intercept
+mymodel = list(map(myfunc, x))
+plt.scatter(x, y)
+plt.plot(x, mymodel)
+plt.show()
+
+
+Pr6:- 
+1. same as pr1 - 1
+2. 2.Perform the data clustering using clustering algorithm using R/Python.
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+iris = load_iris()
+X = iris.data
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+print("Cluster Centers:\n", centroids)
+print("\nCluster Labels:\n", labels)
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='rainbow', s=40)
+plt.scatter(centroids[:, 0], centroids[:, 1], c='black', marker='x', s=100)
+plt.title("K-Means Clustering (Iris Dataset)")
+plt.xlabel("Sepal Length")
+plt.ylabel("Sepal Width")
+plt.show(
+
+Pr7:-
+1. kmeans
+import numpy as np
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+# Sample Data
+X = np.array([[2,3],[3,4],[5,8],[8,8],
+              [1,2],[9,10],[8,2],[10,2],[9,3]])
+
+# Apply KMeans
+k = KMeans(n_clusters=3, random_state=42).fit(X)
+
+# Print Results
+print("Cluster Labels:", k.labels_)
+print("Centroids:\n", k.cluster_centers_)
+
+# Visualization
+plt.scatter(X[:,0], X[:,1], c=k.labels_)
+plt.scatter(k.cluster_centers_[:,0], k.cluster_centers_[:,1],
+            s=200, marker='X')
+plt.title("K-Means Clustering")
+plt.show()
+
+
+This program implements the K-Means clustering algorithm, which is an unsupervised machine learning technique used to group similar data points into clusters. First, a small 2D dataset is created using NumPy. Then, the KMeans model from sklearn.cluster is initialized with 3 clusters and fitted to the data using .fit(X). The algorithm automatically assigns each data point to the nearest cluster center and calculates the centroids (mean position of each cluster). The labels show which cluster each point belongs to, and the centroids represent the center of each group. Finally, Matplotlib is used to visualize the clustered data points and their centroids, helping us clearly see how the data is divided into three groups.
+
+2.Problem Statement A student has received marks in 4 subjects. He wants to predict their total & average marks (based on different scoring scenarios for Subject 4). 
+
+Marks Table 
+Subject Marks 
+Sub 1 78 
+Sub 2 82 
+Sub 3 74 
+Sub 4 65 
+Tasks C
+Calculate the total marks & average marks using Excel formulas. 
+Perform What-If Analysis (scenario manager): Examine how the total marks change if the student scores different marks in Subject 4 (values: 70, 75, 80, 85, 90, 95). Goal Seek: Determine the minimum marks the student must score in Subject 4 to achieve an average of 80
+
+Γ£à PART 1: Calculate Total & Average
+Step 1: Enter Data in Excel
+Enter marks in cells:
+B2 = 78
+B3 = 82
+B4 = 74
+B5 = 65
+Step 2: Calculate Total
+In B6, type:
+=SUM(B2:B5)
+Press Enter.
+Γ£ö Total = 299
+Step 3: Calculate Average
+In B7, type:
+=AVERAGE(B2:B5)
+Press Enter.
+Γ£ö Average = 74.75
+
+Γ£à PART 2: What-If Analysis (Scenario Manager)
+≡ƒÄ» Goal: See how Total changes if Sub 4 marks change to
+70, 75, 80, 85, 90, 95
+Step 1: Open Scenario Manager
+Go to:
+Γ£à Step 2: Open Scenario Manager
+Go to:
+Data ΓåÆ What-If Analysis ΓåÆ Scenario Manager
+Click Add
+Γ£à Step 3: Add Scenarios
+Changing Cell ΓåÆ Select B5 (Subject 4 marks)
+≡ƒö╣ Scenario 1: Best Case
+Name: Best
+Changing Cell: B5
+Value: 90
+Click OK
+
+≡ƒö╣ Scenario 2: Expected Case
+Name: Expected
+Changing Cell: B5
+Value: 75
+Click OK
+
+≡ƒö╣ Scenario 3: Worst Case
+Name: Worst
+Changing Cell: B5
+Value: 60
+Click OK
+
+Γ£à Step 4: Create Summary
+Click Summary
+Select Result Cells:
+B6 (Total)
+B7 (Average)
+
+Click OK
+Γ£à Scenario Results
+Scenario Sub 4	Total	Average
+Worst	 60	294	73.5
+Expected 75	309	77.25
+Best	 90	324	81
+Γ£ö This shows how total changes under different scenarios.
+
+Γ£à PART 3: Goal Seek
+≡ƒÄ» Goal: Find minimum marks in Sub 4 to achieve Average = 80
+Step 1: Open Goal Seek
+Go to:
+Data ΓåÆ What-If Analysis ΓåÆ Goal Seek
+Fill details:
+Option	Select
+Set Cell-B7 (Average cell)
+To Value-80
+By Changing Cell-B5 (Sub 4 marks)
+Click OK.
+
+Pr8:-
+1. same as pr 1 - 1
+2.implement decision tree using python
+# Step 1: Import Libraries
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Step 2: Load Dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Step 3: Split Data (70% Training, 30% Testing)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+
+# Step 4: Create and Train Model
+model = DecisionTreeClassifier(criterion='gini', random_state=42)
+model.fit(X_train, y_train)
+
+# Step 5: Make Predictions
+y_pred = model.predict(X_test)
+
+# Step 6: Evaluate Model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# Step 7: Visualize Decision Tree
+plt.figure(figsize=(12,8))
+plot_tree(model, feature_names=iris.feature_names,
+          class_names=iris.target_names,
+          filled=True)
+plt.title("Decision Tree Visualization")
+plt.show()
+This program implements a Decision Tree classifier using the Iris dataset. The dataset is divided into training and testing sets, and the model is trained using the Gini index criterion. The trained model predicts flower species based on input features. The performance is evaluated using accuracy, confusion matrix, and classification report. Finally, the decision tree is visualized to understand how the model makes classification decisions.
+
+
+Pr9:-
+student name,1-10  subject 1-10 and marks 72 - 90 create data and create pivot table to show average marks , use filter to check individual student marks, and create pivot chart such bar or column charts
+Γ£à STEP 2: Create Pivot Table (Average Marks)
+Step 1:
+Select entire data.
+Step 2:
+Go to:
+Insert ΓåÆ PivotTable
+Choose:
+From Table/Range
+New Worksheet
+Click OK
+Step 3: Arrange Fields
+In Pivot Table Fields:
+Drag Student Name ΓåÆ Rows
+Drag Marks ΓåÆ Values
+Now:
+Click drop-down in "Sum of Marks" ΓåÆ
+Select Value Field Settings ΓåÆ
+Choose Average ΓåÆ Click OK
+Γ£ö Now Pivot Table shows Average Marks of each Student
+
+Γ£à STEP 3: Use Filter (Slicer) for Individual Student
+Method 1: Using Filter Area
+Drag Student Name into Filter section
+Use drop-down to select specific student
+Method 2 (Better): Insert Slicer
+Click Pivot Table
+Go to:
+PivotTable Analyze ΓåÆ Insert Slicer
+Select Student Name
+ClickOK
+Γ£ö Now you can click any student to filter instantly.
+
+Γ£à STEP 4: Create Pivot Chart (Bar / Column Chart)
+Step 1:
+Click anywere inside Pivot Table.
+Step 2:
+Go to:
+Insert ΓåÆ PivotChart
+Step 3:
+Select:
+Clustered Column Chart (Recommended)
+OR
+Bar Chart
+Click OK.
+Γ£ö Chart will display average marks of students.
+
+2.2.implement decision tree using python
+# Step 1: Import Libraries
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Step 2: Load Dataset
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Step 3: Split Data (70% Training, 30% Testing)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+
+# Step 4: Create and Train Model
+model = DecisionTreeClassifier(criterion='gini', random_state=42)
+model.fit(X_train, y_train)
+
+# Step 5: Make Predictions
+y_pred = model.predict(X_test)
+
+# Step 6: Evaluate Model
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# Step 7: Visualize Decision Tree
+plt.figure(figsize=(12,8))
+plot_tree(model, feature_names=iris.feature_names,
+          class_names=iris.target_names,
+          filled=True)
+plt.title("Decision Tree Visualization")
+plt.show()
+
+
+Pr10:-
+1.same as 9(1) with same tasks
+2. implement decision k means in python
+≡ƒî│ 1∩╕ÅΓâú Decision Tree Implementation (Classification)
+# Decision Tree using Iris Dataset
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# Load dataset
+X, y = load_iris(return_X_y=True)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+
+# Create and train model
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Accuracy
+print("Decision Tree Accuracy:", accuracy_score(y_test, y_pred))
+
+≡ƒôè 2∩╕ÅΓâú K-Means Implementation (Clustering)
+# K-Means using Iris Dataset
+
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# Load dataset
+X, y = load_iris(return_X_y=True)
+
+# Apply KMeans (3 clusters)
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+
+# Print cluster centers
+print("Centroids:\n", kmeans.cluster_centers_)
+
+# Plot (using first two features)
+plt.scatter(X[:, 0], X[:, 1], c=kmeans.labels_)
+plt.title("K-Means Clustering")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()
+
+Pr11:-
+1. Complete Linear Regression Code (Python)
+# Step 1: Import Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Step 2: Load Data Warehouse CSV
+df = pd.read_csv("sales_data.csv")
+
+# Step 3: Display Data
+print("First 5 Records:\n", df.head())
+
+# Step 4: Select Features (X) and Target (y)
+# Predicting Sales using Profit
+X = df[['Profit']]
+y = df['Sales']
+
+# Step 5: Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+
+# Step 6: Create and Train Model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Step 7: Predict
+y_pred = model.predict(X_test)
+
+# Step 8: Evaluation
+print("\nModel Coefficient:", model.coef_)
+print("Intercept:", model.intercept_)
+print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+print("R2 Score:", r2_score(y_test, y_pred))
+
+# Step 9: Visualization
+plt.scatter(X_test, y_test, color='blue')
+plt.plot(X_test, y_pred, color='red')
+plt.xlabel("Profit")
+plt.ylabel("Sales")
+plt.title("Linear Regression - Sales vs Profit")
+plt.show()
+
+2.Complete Logistic Regression Code (Data Warehouse CSV)
+# Step 1: Import Libraries
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Step 2: Load Data Warehouse CSV File
+df = pd.read_csv("sales_data.csv")
+
+# Step 3: Display First 5 Rows
+print("First 5 Records:\n", df.head())
+
+# Step 4: Convert Date Column to Date Format (if present)
+if 'Date' in df.columns:
+    df['Date'] = pd.to_datetime(df['Date'])
+    df['Month'] = df['Date'].dt.month
+
+# Step 5: Create Binary Target Variable
+# 1 = High Sales, 0 = Low Sales
+df['High_Sales'] = df['Sales'].apply(lambda x: 1 if x > df['Sales'].mean() else 0)
+
+# Step 6: Convert Categorical Columns (Product, Category) to Numeric
+df = pd.get_dummies(df, columns=['Product', 'Category'], drop_first=True)
+
+# Step 7: Define Features and Target
+X = df.drop(['High_Sales', 'Date'], axis=1, errors='ignore')
+y = df['High_Sales']
+
+# Step 8: Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+
+# Step 9: Apply Logistic Regression
+model = LogisticRegression(max_iter=500)
+model.fit(X_train, y_train)
+
+# Step 10: Predictions
+y_pred = model.predict(X_test)
+
+# Step 11: Evaluation
+print("\nAccuracy:", accuracy_score(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+≡ƒôè ETL Map for Sales Data Warehouse
+ETL Flow Diagram (Conceptual Map)
+[Source System]
+   (CSV / ERP / DB)
+        Γöé
+        Γû╝
+  ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+  Γöé  EXTRACT    Γöé
+  Γöé Read Sales  Γöé
+  Γöé Data        Γöé
+  ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+        Γöé
+        Γû╝
+  ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+  Γöé TRANSFORM   Γöé
+  Γöé - Remove nulls
+  Γöé - Convert Date
+  Γöé - Remove duplicates
+  Γöé - Create Month
+  Γöé - Validate Sales>0
+  Γöé - Calculate Profit %
+  ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+        Γöé
+        Γû╝
+  ΓöîΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÉ
+  Γöé LOAD        Γöé
+  Γöé Load into   Γöé
+  Γöé FactSales   Γöé
+  Γöé Table       Γöé
+  ΓööΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÿ
+        Γöé
+        Γû╝
+[Data Warehouse / SQL DB]
+        Γöé
+        Γû╝
+[Power BI / Excel / ML Models]
+
+import pandas as pd
+df = pd.read_csv("sales_data.csv")
+print("Data Extracted Successfully")
+Γ£à Step 2: Transform
+# Remove missing values
+df.dropna(inplace=True)
+
+# Convert Date column
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Remove duplicates
+df.drop_duplicates(inplace=True)
+
+# Create Month column
+df['Month'] = df['Date'].dt.month
+
+# Filter invalid sales
+df = df[df['Sales'] > 0]
+
+# Create Profit Percentage
+df['Profit_Percent'] = (df['Profit'] / df['Sales']) * 100
+
+print("Data Transformed Successfully")
+Γ£à Step 3: Load (To SQL Data Warehouse)
+from sqlalchemy import create_engine
+
+# Connect to SQL Server / MySQL
+engine = create_engine("mysql+pymysql://root:password@localhost/sales_dw")
+
+df.to_sql("fact_sales", con=engine, if_exists="append", index=False)
+
+print("Data Loaded Successfully")
+
+Γ£à Option 1: Windows Task Scheduler (Simple)
+Save ETL script as:
+etl_sales.py
+Open Task Scheduler
+Click Create Basic Task
+Choose:
+Trigger ΓåÆ Daily (e.g., 2:00 AM)
+Action ΓåÆ Start a Program
+Program:
+python
+Add arguments:
+C:\path\etl_sales.py
+Finish

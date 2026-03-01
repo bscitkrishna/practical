@@ -1,0 +1,1564 @@
+pr 1
+1.in android with very simple create android calculator in java 
+xml:-
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="0"
+        android:textSize="30sp"
+        android:gravity="end"
+        android:background="#15F6F5F3"
+        android:padding="10dp"/>
+
+    <!-- First Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="7"
+            android:onClick="numberClick"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="8"
+            android:onClick="numberClick"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="9"
+            android:onClick="numberClick"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="/"
+            android:onClick="operatorClick"/>
+    </LinearLayout>
+
+    <!-- Second Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="4" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="5" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="6" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="*" android:onClick="operatorClick"/>
+    </LinearLayout>
+
+    <!-- Third Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="1" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="2" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="3" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="-" android:onClick="operatorClick"/>
+    </LinearLayout>
+
+    <!-- Fourth Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="0" android:onClick="numberClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="C" android:onClick="clearClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="=" android:onClick="equalClick"/>
+        <Button android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:text="+" android:onClick="operatorClick"/>
+    </LinearLayout>
+
+</LinearLayout>
+.java:-
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    TextView result;
+    String current = "";
+    String operator = "";
+    double firstNumber = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        result = findViewById(R.id.result);
+    }
+
+    public void numberClick(View view) {
+        Button btn = (Button) view;
+        current += btn.getText().toString();
+        result.setText(current);
+    }
+
+    public void operatorClick(View view) {
+        Button btn = (Button) view;
+        firstNumber = Double.parseDouble(current);
+        operator = btn.getText().toString();
+        current = "";
+    }
+
+    public void equalClick(View view) {
+        double secondNumber = Double.parseDouble(current);
+        double finalResult = 0;
+
+        switch (operator) {
+            case "+":
+                finalResult = firstNumber + secondNumber;
+                break;
+            case "-":
+                finalResult = firstNumber - secondNumber;
+                break;
+            case "*":
+                finalResult = firstNumber * secondNumber;
+                break;
+            case "/":
+                finalResult = firstNumber / secondNumber;
+                break;
+        }
+
+        result.setText(String.valueOf(finalResult));
+        current = String.valueOf(finalResult);
+    }
+
+    public void clearClick(View view) {
+        current = "";
+        result.setText("0");
+    }
+}
+
+2.create a simple "Hello world application and explain the purpose of Mainactivity.java and activity_main.xml
+res → layout → activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:textSize="24sp"/>
+
+</LinearLayout>
+📌 What is MainActivity.java?
+MainActivity.java is:
+👉 The brain (logic part) of your app
+👉 Controls what happens when app starts
+👉 Handles button clicks, calculations, events
+Important Line:
+setContentView(R.layout.activity_main);
+This line tells Android:
+"Open activity_main.xml and show it on screen."
+Without this line, nothing will display.
+
+📌 What is activity_main.xml?
+activity_main.xml is:
+👉 The design (UI part) of your app
+👉 Contains buttons, text, images
+👉 Decides how screen looks
+In our example:
+<TextView
+    android:text="Hello World!" />
+This displays the text on screen.
+🧠 Simple Understanding
+File	Purpose	Example
+MainActivity.java-Logic / Brain	What happens when app runs
+activity_main.xml-Design / Face	What user sees
+🔄 How They Work Together
+App starts
+MainActivity.java runs first
+setContentView() loads activity_main.xml
+XML UI appears on screen
+
+Pr 2
+1.create login screen with Edittext fields username and password and button to submit and also include validation for empty fields
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textSize="26sp"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Username"
+        android:inputType="text"
+        android:layout_marginBottom="15dp"/>
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:inputType="textPassword"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"/>
+
+</LinearLayout>
+
+.java
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText etUsername, etPassword;
+    Button btnLogin;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        etUsername = findViewById(R.id.etUsername);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String username = etUsername.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+
+                if (username.isEmpty()) {
+                    etUsername.setError("Username is required");
+                }
+                else if (password.isEmpty()) {
+                    etPassword.setError("Password is required");
+                }
+                else {
+                    Toast.makeText(MainActivity.this,
+                            "Login Successful",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+}
+
+2.AlertDialog Practical
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show Alert"
+        android:onClick="showAlertDialog"/>
+
+</LinearLayout>
+.java
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    public void showAlertDialog(View v) {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Android Studio");
+        alert.setMessage("Exit App ?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Toast.makeText(MainActivity.this, "App Closed", Toast.LENGTH_SHORT).show();
+                finish();   // closes the activity
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();   // closes dialog only
+            }
+        });
+
+        alert.create().show();
+    }
+}
+
+Pr 4:-
+1.Android Activity Life Cycle Practical
+ 🧠 Lifecycle Methods Explained
+1️⃣ onCreate()
+✔ Called when activity is first created
+✔ Initialize UI using setContentView()
+✔ Initialize variables
+
+onCreate()
+📌 Happens only once when activity starts first time.
+
+2️⃣ onStart()
+✔ Activity becomes visible
+✔ User can see screen
+
+3️⃣ onResume()
+✔ Activity is in foreground
+✔ User can interact
+✔ App is running
+
+4️⃣ onPause()
+✔ Another activity comes in front
+✔ App partially hidden
+✔ Save data here
+
+Example:
+Incoming call
+Open another app
+
+5️⃣ onStop()
+✔ Activity not visible
+✔ App in background
+
+6️⃣ onRestart()
+✔ Called when returning from stopped state
+
+7️⃣ onDestroy()
+✔ Activity is destroyed
+✔ App closed
+
+MainActivity.java:-
+package com.example.myapplication;
+
+import android.os.Bundle;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "ActivityLifecycle";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate: Activity is created.");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: Activity is becoming visible.");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: Activity is now in foreground.");
+        Log.d(TAG, "HANUMANTHA T024");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: Activity is partially hidden.");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: Activity is no longer visible.");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart: Activity is restarting.");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: Activity is destroyed.");
+    }
+}
+
+1️⃣ Run the app
+2️⃣ Open Logcat (bottom in Android Studio)
+3️⃣ In search box type:
+ActivityLifecycle
+
+4️⃣ Now:
+Open app → see onCreate, onStart, onResume
+Press Home → see onPause, onStop
+Return to app → see onRestart, onStart, onResume
+Close app → see onDestroy
+
+Pr 5:-
+1.Programming Resources
+Android Resources: (Color, Theme, String, Drawable, Dimension, Image) -  simple app
+res → values → strings.xml
+<resources>
+    <string name="app_name">ResourceApp</string>
+    <string name="welcome_text">Welcome to Android Resources</string>
+    <string name="button_text">Click Me</string>
+</resources>
+
+res → values → colors.xml<resources>
+    <color name="primaryColor">#6200EE</color>
+    <color name="textColor">#000000</color>
+    <color name="buttonColor">#03DAC5</color>
+</resources>
+
+res → values → dimens.xml
+
+<resources>
+    <dimen name="text_size">22sp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+</resources>
+
+res → drawable → New → Drawable Resource File
+Name: rounded_bg.xml
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/buttonColor"/>
+    <corners android:radius="12dp"/>
+</shape>
+
+Place any image inside:
+res → drawable
+Example name: logo.png
+
+✅ Step 6: activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_large"
+    android:background="@color/primaryColor">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_text"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/textColor"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_text"
+        android:background="@drawable/rounded_bg"/>
+</LinearLayout>
+
+res → values → themes.xml
+<style name="Theme.ResourceApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <item name="colorPrimary">@color/primaryColor</item>
+</style>
+
+2.Airplane Mode Broadcast Receiver app
+MainActivity.java
+package com.example.arplane;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.IntentFilter;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    AirplaneModeChangeReceiver receiver;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        receiver = new AirplaneModeChangeReceiver();
+
+        IntentFilter filter = new IntentFilter("android.intent.action.AIRPLANE_MODE");
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+}
+
+AirplaneModeChangeReceiver.java - Right click on package -Click → New - Select → Java Class
+package com.example.arplane;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
+public class AirplaneModeChangeReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        boolean isOn = intent.getBooleanExtra("state", false);
+
+        if (isOn) {
+            Toast.makeText(context, "Airplane Mode ON", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Airplane Mode OFF", Toast.LENGTH_SHORT).show();
+        }
+    }
+}
+
+Pr 5:-
+1. Create a Relative Layout screen with:
+A profile screen
+A profile image centered at top
+A TextView displaying name below image
+A Button aligned to bottom center
+All views aligned properly using relative properties
+
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher_foreground"/>
+
+    <!-- Name Text -->
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hanumantha"
+        android:textSize="20sp"
+        android:layout_below="@id/profileImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Button -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Profile"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
+
+Property-Purpose
+layout_centerHorizontal-Center horizontally
+layout_alignParentTop-Align to top
+layout_below-Place below another view
+layout_alignParentBottom-Align to bottom
+
+2.Android Activity Life Cycle Practical - same as given above
+
+Pr 6:-
+1. Create a simple login app using ConstraintLayout
+Username & Password vertically aligned
+Login button centered horizontally
+Forgot password link aligned to right of password field
+Position all elements using constraints
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Username"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/username"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="#0000FF"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintEnd_toEndOf="@id/password"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Pr 7:- 
+1. create a Simple Registration Form App with
+✅ Name
+✅ Email
+✅ Phone
+✅ Password (hidden)
+✅ Confirm Password (hidden)
+✅ Submit Button
+✅ Empty field validation
+✅ Password match validation
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone"
+            android:inputType="phone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+package com.example.registrationapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText etName, etEmail, etPhone, etPassword, etConfirmPassword;
+    Button btnSubmit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        etName = findViewById(R.id.etName);
+        etEmail = findViewById(R.id.etEmail);
+        etPhone = findViewById(R.id.etPhone);
+        etPassword = findViewById(R.id.etPassword);
+        etConfirmPassword = findViewById(R.id.etConfirmPassword);
+        btnSubmit = findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String name = etName.getText().toString().trim();
+                String email = etEmail.getText().toString().trim();
+                String phone = etPhone.getText().toString().trim();
+                String password = etPassword.getText().toString().trim();
+                String confirmPassword = etConfirmPassword.getText().toString().trim();
+
+                if (name.isEmpty()) {
+                    etName.setError("Name required");
+                }
+                else if (email.isEmpty()) {
+                    etEmail.setError("Email required");
+                }
+                else if (phone.isEmpty()) {
+                    etPhone.setError("Phone required");
+                }
+                else if (password.isEmpty()) {
+                    etPassword.setError("Password required");
+                }
+                else if (confirmPassword.isEmpty()) {
+                    etConfirmPassword.setError("Confirm your password");
+                }
+                else if (!password.equals(confirmPassword)) {
+                    etConfirmPassword.setError("Passwords do not match");
+                }
+                else {
+                    Toast.makeText(MainActivity.this,
+                            "Registration Successful",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+}
+
+pr 8:- Registration form added country field
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone"
+            android:inputType="phone"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Country Dropdown -->
+        <Spinner
+            android:id="@+id/spCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+package com.example.registrationapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.*;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, phone, pass, confirm;
+    Spinner country;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        phone = findViewById(R.id.etPhone);
+        pass = findViewById(R.id.etPassword);
+        confirm = findViewById(R.id.etConfirmPassword);
+        country = findViewById(R.id.spCountry);
+
+        country.setAdapter(new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Select Country","India","USA","UK"}
+        ));
+
+        findViewById(R.id.btnSubmit).setOnClickListener(v -> validate());
+    }
+
+    private void validate() {
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone.getText())) {
+            phone.setError("Required");
+            return;
+        }
+
+        if (country.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Select Country", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass.getText())) {
+            pass.setError("Required");
+            return;
+        }
+
+        if (!pass.getText().toString()
+                .equals(confirm.getText().toString())) {
+            confirm.setError("Password not match");
+            return;
+        }
+
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+    }
+}
+
+In this registration form, the country dropdown is created using a Spinner. A Spinner is a UI component in Android that allows the user to select one option from a list. To display items inside the Spinner, we first create an array of country names such as “Select Country”, “India”, “USA”, and “UK”. Then we use an ArrayAdapter to connect this array (data source) to the Spinner (user interface). The adapter acts as a bridge between the data and the Spinner view. Once the adapter is set using setAdapter(), the Spinner displays the list of countries as a dropdown menu. When the user selects an option, we can get the selected value using getSelectedItem() or check the selected position using getSelectedItemPosition().
+
+For validation, we ensure that the user does not leave any field empty and enters correct information. To check empty fields, we use TextUtils.isEmpty() on the text entered in each EditText. If a field is empty, we show an error message using setError(), which displays a red warning below the textbox. For the country dropdown, we usually keep “Select Country” as the first item in the list. During validation, if the selected position is 0, it means the user has not chosen a proper country, so we show a message asking them to select one.
+
+For password validation, we compare the password and confirm password fields using the equals() method. If both values are not the same, we show an error message indicating that the passwords do not match. If all validations pass successfully, we display a success message using Toast. This ensures that the user provides complete and correct information before submitting the form.
+
+Pr 9:-Registration form added agree to terms and conditions with radio button field
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone"
+            android:inputType="phone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Agree Radio Button -->
+        <RadioButton
+            android:id="@+id/rbAgree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I Agree to Terms and Conditions"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+package com.example.myapplication;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.*;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, phone, pass, confirm;
+    RadioButton agree;
+    Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        phone = findViewById(R.id.etPhone);
+        pass = findViewById(R.id.etPassword);
+        confirm = findViewById(R.id.etConfirmPassword);
+        agree = findViewById(R.id.rbAgree);
+        submit = findViewById(R.id.btnSubmit);
+
+        submit.setOnClickListener(v -> validate());
+    }
+
+    private void validate() {
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone.getText())) {
+            phone.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass.getText())) {
+            pass.setError("Required");
+            return;
+        }
+
+        if (!pass.getText().toString()
+                .equals(confirm.getText().toString())) {
+            confirm.setError("Password not match");
+            return;
+        }
+
+        if (!agree.isChecked()) {
+            Toast.makeText(this,
+                    "Please agree to Terms & Conditions",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this,
+                "Registration Successful",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+
+In this registration form, user details are collected using EditText fields with appropriate input types such as textEmailAddress and textPassword. The RadioButton is used to confirm agreement to terms and conditions. During validation, empty fields are checked using TextUtils.isEmpty(), passwords are compared using equals(), and the RadioButton is validated using isChecked(). If all conditions are satisfied, a success message is displayed.
+
+Pr 10 - Registration form added submit(floating action button)
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Name"
+                android:inputType="textPersonName"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Email"
+                android:inputType="textEmailAddress"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Phone"
+                android:inputType="phone"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                android:layout_marginBottom="12dp"/>
+
+            <EditText
+                android:id="@+id/etConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:layout_marginBottom="80dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Floating Action Button -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="24dp"
+        android:contentDescription="Submit"
+        app:srcCompat="@android:drawable/ic_menu_send"/>
+
+</RelativeLayout>
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, phone, pass, confirm;
+    FloatingActionButton fab;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        phone = findViewById(R.id.etPhone);
+        pass = findViewById(R.id.etPassword);
+        confirm = findViewById(R.id.etConfirmPassword);
+        fab = findViewById(R.id.fabSubmit);
+
+        fab.setOnClickListener(v -> validate());
+    }
+
+    private void validate() {
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone.getText())) {
+            phone.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass.getText())) {
+            pass.setError("Required");
+            return;
+        }
+
+        if (!pass.getText().toString()
+                .equals(confirm.getText().toString())) {
+            confirm.setError("Password not match");
+            return;
+        }
+
+        Toast.makeText(this,
+                "Registration Successful",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+In this registration form, user input is collected using EditText fields with proper input types such as textEmailAddress and textPassword. A Floating Action Button is used instead of a normal button to submit the form. Validation is done using TextUtils.isEmpty() for empty fields and equals() method to check password match. If all validations pass, a success message is displayed.
+
+Pr 11:- Registration form added added checkbox and a normal submit button
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone"
+            android:inputType="phone"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Checkbox -->
+        <CheckBox
+            android:id="@+id/cbAgree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="I agree to Terms and Conditions"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.*;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, phone, pass, confirm;
+    CheckBox agree;
+    Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        phone = findViewById(R.id.etPhone);
+        pass = findViewById(R.id.etPassword);
+        confirm = findViewById(R.id.etConfirmPassword);
+        agree = findViewById(R.id.cbAgree);
+        submit = findViewById(R.id.btnSubmit);
+
+        submit.setOnClickListener(v -> validate());
+    }
+
+    private void validate() {
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone.getText())) {
+            phone.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass.getText())) {
+            pass.setError("Required");
+            return;
+        }
+
+        if (!pass.getText().toString()
+                .equals(confirm.getText().toString())) {
+            confirm.setError("Password not match");
+            return;
+        }
+
+        if (!agree.isChecked()) {
+            Toast.makeText(this,
+                    "Please accept Terms & Conditions",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this,
+                "Registration Successful",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+In this registration form, user details are collected using EditText fields with proper input types. A CheckBox is used for agreeing to terms and conditions. During validation, empty fields are checked using TextUtils.isEmpty(), passwords are compared using equals(), and the CheckBox state is verified using isChecked(). If all conditions are satisfied, a success message is displayed.
+
+pr 12:- Registration form added added date of birth picker and a normal submit button
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Phone"
+            android:inputType="phone"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Date of Birth -->
+        <EditText
+            android:id="@+id/etDob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Select Date of Birth"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+</ScrollView>
+
+package com.example.registrationapp;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.app.DatePickerDialog;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.*;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText name, email, phone, dob, pass, confirm;
+    Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        name = findViewById(R.id.etName);
+        email = findViewById(R.id.etEmail);
+        phone = findViewById(R.id.etPhone);
+        dob = findViewById(R.id.etDob);
+        pass = findViewById(R.id.etPassword);
+        confirm = findViewById(R.id.etConfirmPassword);
+        submit = findViewById(R.id.btnSubmit);
+
+        // Date Picker
+        dob.setOnClickListener(v -> showDatePicker());
+
+        submit.setOnClickListener(v -> validate());
+    }
+
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) ->
+                        dob.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear),
+                year, month, day);
+
+        datePickerDialog.show();
+    }
+
+    private void validate() {
+
+        if (TextUtils.isEmpty(name.getText())) {
+            name.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(email.getText())) {
+            email.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(phone.getText())) {
+            phone.setError("Required");
+            return;
+        }
+
+        if (TextUtils.isEmpty(dob.getText())) {
+            dob.setError("Select Date of Birth");
+            return;
+        }
+
+        if (TextUtils.isEmpty(pass.getText())) {
+            pass.setError("Required");
+            return;
+        }
+
+        if (!pass.getText().toString()
+                .equals(confirm.getText().toString())) {
+            confirm.setError("Password not match");
+            return;
+        }
+
+        Toast.makeText(this,
+                "Registration Successful",
+                Toast.LENGTH_SHORT).show();
+    }
+}
+
+In this registration form, DatePickerDialog is used to select the date of birth. The DatePickerDialog is opened when the DOB EditText is clicked, and the selected date is displayed in the textbox. Validation is performed using TextUtils.isEmpty() to check empty fields and equals() to verify that password and confirm password match. If all inputs are valid, a success message is shown.
+
+Pr 13:-
+Airplane mode with Broadcast receiver - same as given above
+
+

@@ -1,719 +1,313 @@
-Practical 1: Packet Tracer - Configure Cisco Routers for Syslog,
-NTP, and SSH Operations
-do the connection and attach HWIC-2t into router into all 3 router
-serverpc-A 192.168.1.5
-serverpc-A 192.168.1.6
-pc-C 192.168.1.3.5
-
-in R1-config- GigabitEthernet0/0 add 192.168.1.1 - 255.255.255.0
-after confuing PC-C configure R3 for gigabitEthernet0/1 - 192.168.3.1 255.255.255.0
-
-Now we have to work in serial ports 
-in R1 s0/0/0 add 10.1.1.1 - 255.255.255.252
-
-in R2 s0/0/0 add 10.1.1.2 - 255.255.255.252
-in R2 s0/0/1 add 10.2.2.2 - 255.255.255.252
-
-in R3 s0/0/1 add 10.2.2.1 - 255.255.255.252
-
-for 20 marks will do RIP
-in R1 add 192.168.1.0 , 10.1.1.0
-in R2 add 10.1.1.0, 10.2.2.0
-in R3 add 192.168.3.0, 10.2.2.0
-
-OSPF 
-in R1
-en
-conf t
-host R1
-router ospf 1
-network 192.168.1.0 0.0.0.255 area 0
-network 10.1.1.0 0.255.255.255 area 0
-exit
-
-in R2
-en
-conf t
-router ospf 1
-network 10.1.1.0 255.255.255.0 area 0
-network 10.2.2.0 255.255.255.0 area 0
-exit
-
-R3
-en 
-conf t
-host R3
-router ospf 1
-network 10.2.2.0 0.255.255.255 area 0
-network 192.168.3.0 0.0.0.255 area 0
-exit
-
-OSPF MID5 authentication 
-R1
-R1#en  
-R1#conf t  
-Enter configuration commands, one per line.  End with CNTL/Z.  
-R1(config)#router ospf 1  
-R1(config-router)#area 0 authentication message-digest  
-R1(config-router)#int s0/0/0  
-R1(config-if)#ip ospf message-digest-key 1 md5 admin  
-R1(config-if)#exit
-
-R2
-Router#en 
-Router#conf t  
-Router(config)#router ospf 1 
-Router(config-router)#area 0 authentication message-digest 
-Router(config-router)#int s0/0/0 
-Router(config-if)#ip ospf message-digest-key 1 md5 admin
-Router(config-if)#int s0/0/1
-Router(config-if)#ip ospf message-digest-key 1 md5 admin
-Router(config-if)#exit
-Router(config)# 
-
-R3
-R3>en
-R3#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R3(config)#router ospf 1
-R3(config-router)#area 0 authentication message-digest
-R3(config-router)#int s0/0/1
-R3(config-if)#ip ospf message-digest-key 1 md5 admin
-R3(config-if)#exit
-
-check output for routers for ospf
-r1 - show ip ospf interface
-r2 - show ip ospf interace
-r3 - show ip ospf interface s0/0/1
-
-NTP
-Turn on the NTP service and enable authentication by setting Key 1 with password ‘admin’ 
-
-Sylog server
-R1
-R1>en  
-R1#conf t  
-R1(config)#ntp server 192.168.1.5  
-R1(config)#ntp update-calendar  
-R1(config)#ntp authenticate  
-R1(config)#ntp trusted-key 1  
-R1(config)#ntp authentication-key 1 md5 admin  
-R1(config)#service timestamps log datetime msec  
-R1(config)#logging host 192.168.1.6  
-
-R2
-R2>en  
-R2#conf t  
-Enter configuration commands, one per line.  End with CNTL/Z.  
-R2(config)#ntp server 192.168.1.5  
-R2(config)#ntp update-calendar  
-R2(config)#ntp authenticate  
-R2(config)#ntp trusted-key 1  
-R2(config)#ntp authentication-key 1 md5 admin  
-R2(config)#service timestamps log datetime msec  
-R2(config)#logging host 192.168.1.6  
-
-R3
-R3>
-R3>en
-R3#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R3(config)#ntp server 192.168.1.5
-R3(config)#ntp update-calendar
-R3(config)#ntp authenticate
-R3(config)#ntp trusted-key 1
-R3(config)#ntp authentication-key 1 md5 admin
-R3(config)#service timestamps log datetime msec
-R3(config)#logging host 192.168.1.6
-
-Output: -
-Syslog started working after turning on the service in PC-B and setting the logging host on the routers.
-
-Practical no 2 Configuring IPv6 ACLs
-Turn each router (R1, R2, and R3), drag the HWIC-2T module into the empty slot of each router, and turn them on again.We add themodule so the router gets serial ports for connecting to 
-
-/64
-pc 1 - ipv6 - 2001:DB8:1:10::2 - 2001:DB8:1:10::1
-pc 2 - ipv6 - 2001:DB8:1:11::2 - 2001:DB8:1:11::1
-pc 3 - ipv6 - 2001:DB8:1:30::30 - 2001:DB8:1:30::1
-
-R1
-Router>en
-Router#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Router(config)#host R1
-R1(config)#ipv6 unicast-routing
-R1(config)#int g0/0
-R1(config-if)#ipv6 enable
-R1(config-if)#ipv6 address 2001:DB8:1:10::1/64
-% Invalid input detected at '^' marker.
-R1(config-if)#ipv6 address 2001:DB8:1:10::1/64
-R1(config-if)#no shut
-
-R1(config-if)#exit
-R1(config)#int g0/1
-R1(config-if)#ipv6 enable
-R1(config-if)#ipv6 address address 2001:DB8:1:11::1/64
-R1(config-if)#no shut
-
-
-R2
-Router>en
-Router#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Router(config)#host R2
-R2(config)#ipv6 unicast-routing
-R2(config)#int s0/0/0
-R2(config-if)#ipv6 enable
-R2(config-if)#ipv6 address 2001:DB8:1:28::1/64
-R2(config-if)#no shut
-R2(config-if)#exit
-
-R2(config)#ipv6 unicast-routing
-R2(config)#int s0/0/1
-R2(config-if)#ipv6 enable
-R2(config-if)#ipv6 address address 2001:DB8:1:29::1/64
-R2(config-if)#no shut
-
-R3
-Router>en
-Router#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Router(config)#host R3
-R3(config)#ipv6 unicast-routing
-R3(config)#int g0/0
-R3(config-if)#ipv6 enable
-R3(config-if)#ipv6 address address 2001:DB8:1:30::1/64
-R3(config-if)#exit
-
-R3(config)#ipv6 unicast-routing
-R3(config)#int s0/0/0
-R3(config-if)#ipv6 enable
-R3(config-if)#ipv6 address address 2001:DB8:1:29::2/64
-R3(config-if)#no shut
-
-
-RIP of routers
-R1
-R1(config-if)#exit
-R1(config)#ipv6 unicast-routing
-R1(config)#ipv6 router rip abc
-R1(config-rtr)#exit
-R1(config)#int g0/0
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#int g0/1
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#int s0/0/0
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#exit
-
-R2
-R2(config-if)#exit
-R2(config)#ipv6 unicast-routing
-R2(config)#ipv6 router rip abc
-R2(config-rtr)#exit
-R2(config)#int s0/0/0
-R2(config-if)#ipv6 rip abc en
-R2(config-if)#int s0/0/1
-R2(config-if)#ipv6 rip abc en
-R2(config-if)#exit
-
-R3
-R3(config-if)#exit  
-R3(config)#ipv6 unicast-routing  
-R3(config)#ipv6 router rip abc  
-R3(config-rtr)#exit  
-R3(config)#int s0/0/0  
-R3(config-if)#ipv6 rip abc en  
-R3(config-if)#int g0/0  
-R3(config-if)#ipv6 rip abc en  
-R3(config-if)#exit  
-R3(config)#
-
-blocking icmps
-R1(config-if)#ipv6 traffic-filter BLOCK_HTTPS_ACL in
-R1(config-if)#ipv6 access-list BLOCK_HTTPS_ACL
-R1(config-ipv6-acl)#deny tcp any host 2001:DB8:1:30::30 eq www
-R1(config-ipv6-acl)#deny tcp any host 2001:DB8:1:30::30 eq 443
-R1(config-ipv6-acl)#int g0/0
-R1(config-if)#ipv6 traffic-filter BLOCK_HTTPS_ACL in
-
-output
-ping 2001:DB8:1:30::30
-pc 1 or A desktop - web browser - https://2001:DB8:1:30::30 - request timeout
-
-
-Practical no 3 - Configure IPV6 ACL to block ICMP access
-Turn off each router (R1, R2, and R3), drag the HWIC-2T module into the empty slot of each router, and turn them on again. We add the HWIC-2T module so the router gets serial ports for connecting to other routers.
-
-PC A - 2001:DB8:1:10::2 /64 - 2001:DB8:1:10::1
-PC B - 2001:DB8:1:11::2 /64 - 2001:DB8:1:11::1
-PC C - 2001:DB8:1:30::30 / 64 - 2001:DB8:1:30::1
-
-R1
-Router>en
-Router#conf t
-Router(config)#host R1
-R1(config)#ipv6 unicast-routing
-R1(config)#int g0/0
-R1(config-if)#ipv6 enable
-R1(config-if)#ipv6 address 2001:DB8:1:10::/64
-R1(config-if)#no shut
-
-R1(config-if)#int g0/1
-R1(config-if)#ipv6 enable
-R1(config-if)#ipv6 address 2001:DB8:1:11::1/64
-R1(config-if)#no shut
-R1(config-if)#exit
-
-R1(config)#ipv6 unicast-routing
-R1(config)#int s0/0/0
-R1(config-if)#ipv6 enable
-R1(config-if)#ipv6 address 2001:DB8:1:28::2/64
-R1(config-if)#clock rate 64000
-R1(config-if)#no shut
-
-
-R2
-Router>en
-Router#conf t
-Router(config)#host R2
-R2(config)#ipv6 unicast-routing
-R2(config)#int s0/0/0
-R2(config-if)#ipv6 enable
-R2(config-if)#ipv6 address 2001:DB8:1:28::1/64
-R2(config-if)#no shut
-
-R2(config-if)#
-R2(config-if)#ipv6 unicast-routing
-R2(config)#int s0/0/1
-R2(config-if)#ipv6 enable
-R2(config-if)#ipv6 address 2001:DB8:1:29::1/64
-R2(config-if)#no shut
-
-
-R3
-Router>en
-Router#conf t
-Router(config)#host R3
-R3(config)#ipv6 unicast-routing
-R3(config)#int g0/0
-R3(config-if)#ipv6 enable
-R3(config-if)#ipv6 address 2001:DB8:1:30::1/64
-R3(config-if)#no shut
-
-
-R3(config-if)#
-R3(config)#ipv6 unicast-routing
-R3(config)#int g0/0/0
-R3(config-if)#ipv6 enable
-R3(config-if)#ipv6 address 2001:DB8:1:29::2/64
-R3(config-if)#no shut
-
-Rip between Routers:
-R1
-R1(config-if)#ipv6 unicast-routing
-R1(config)#ipv6 router rip abc
-R1(config-rtr)#int g0/0
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#int g0/1
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#int s0/0/0
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#exit
-R1(config)#ipv6 unicast-routing
-R1(config)#int g0/0
-R1(config-if)#ipv6 rip abc en
-R1(config-if)#
-
-R2
-R2(config-if)#ipv6 unicast-routing
-R2(config)#int s0/0/1
-R2(config-if)#ipv6 unicast-routing
-R2(config)#ipv6 router rip abc
-R2(config-rtr)#exit
-R2(config)#int s0/0/0
-R2(config-if)#ipv6 router rip abc
-R2(config-rtr)#exit
-R2(config)#int s0/0/1
-R2(config-if)#ipv6 rip abc en
-R2(config)#int s0/0/0
-R2(config-if)#ipv6 rip abc en
-R2(config-if)#exit
-R2(config)#
-
-R3
-R3(config-if)#ipv6 router rip abc
-R3(config-rtr)#exit
-R3(config)#int g0/0
-R3(config-if)#ipv6 rip abc en
-R3(config)#int s0/0/0
-R3(config-if)#ipv6 rip abc en
-R3(config-if)#exit
-R3(config)#
-
-output -  ping all three pc with each others ip addresses
-blocking icmps
-R3>en
-R3#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R3(config)#host R3
-R3(config)#ipv6 access-list BLOCK_ICMP ACL
-R3(config-ipv6-acl)#deny icmp any any
-R3(config-ipv6-acl)#permit ipv6 any any
-R3(config-ipv6-acl)#int g0/0
-R3(config-if)#ipv6 traffic-filter BLOCK_ICMP ACL in
-R3(config-if)#exit
-
-output
-ping pc c from A and B
-
-Practical N0 4 - Configure local AAA for console line and for virtual terminal line
-two pc, 2960 switch and router 1941
-
-pc 1 - 192.168.1.2 - 192.168.1.1
-pc 2 - 192.168.1.3 - 192.168.1.1
-
-in router - config-  gigabitethernet0/0 - 192.168.1.1 - on it
-
-in R1
-Router(config-if)#exit
-Router(config)#host R1
-R1(config)#username admin secret abc
-R1(config)#aaa new-model
-R1(config)#aaa authentication login default local
-R1(config)#line console 0
-R1(config-line)#login authentication default
-R1(config-line)#exit
-                            
-exit all the way till where asked for username and password
-
-in R1
-Username: admin
-Password:
-R1>enable
-R1#confi t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R1(config)#ip domain-name is.com
-R1(config)#crypto key generate rsa
-How many bits in the modulus [512]: 1024
-% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
-R1(config)#aaa authentication login SSH-LOGIN local
-*Mar 1 0:32:2.163: %SSH-5-ENABLED: SSH 1.99 has been enabled
-R1(config)#line vty 0 4
-R1(config-line)#login authentication SSH-LOGIN                              ^
-R1(config-line)#transport input ssh
-R1(config-line)#exit
-
-output 
-in PC A -  cmd - ssh -l 192.168.1.1
-in PC B -  cmd - ssh -l 192.168.1.1
-
-Practical no 5 : -Configure an ACL that will permit FTP and HTTP access on R1. Verify ACL implementation for FTP and PC2 
-server, 2960 4 switches, 2 pcs and router 2911
-
-pc A - 172.22.34.66 -  172.22.34.1  - 255.255.0.0
-pc B -  172.22.34.98 -  172.22.34.97 - 255.255.255.240
-server - 172.22.34.62 - 172.22.34.61 - 255.255.255.192
-
-routers configuration gigabitethernet0/0 0/1
-gigabitethernet0/0 - 172.22.34.1 - 255.255.0.0
-gigabitethernet0/1 - 172.22.34.97 - 255.255.255.240
-gigabitethernet0/2 - 172.22.34.61 - 255.255.255.192
-
-ping each other now
-
-R1
-Router#en
-Router#conf t
-Router(config)#host R1
-R1(config)#access-list 100 permit tcp 172.22.34.64 0.0.0.31 host 172.22.34.62 eq ftp
-R1(config)#access-list 100 permit icmp 172.22.34.64 0.0.0.31 host 172.22.34.62
-R1(config)#int g0/0
-R1(config-if)#ip access-group 100 in
-R1(config-if)#exit
-
-output goto command prompt in pc1 type ftp 172.22.34.62
-username - cisco
-password -cisco
-
-output- blocking pc2 
-ping 172.22.34.98
-
-http connection for pc2
-R1(config)#int g0/1
-R1(config-if)#ip access-group HTTP_ACL in
-R1(config-if)#exit
-R1(config)#
-
-output - in pc2 web browser - type http://172.22.34.62
-
-Practical No 6 -  Configure basic network security and an devices including seting passwords, encrypting password,secuiring remote access(Telnet and ssh) and limiting unauthorized access 
-
-3 routers 1941
-switches 2960
-1 server 
-1 pc named pc A
-
-PC-A- 192.168.1.3 - 255.255.255.0 - 192.168.1.1 
-PC-C- 192.168.3.3 - 255.255.255.0 - 192.168.3.1
-
-R1
-G0/1 - 192.168.1.1 255.255.255.0 
-S0/0/0 - 10.1.1.1 255.255.255.252 
-R2
-S0/0/0 - 10.1.1.2 255.255.255.252
-S0/0/1 - 10.2.2.2 255.255.255.252
-R3
-G0/1 - 192.168.3.1 255.255.255.0 
-S0/0/1 - 10.2.2.1 255.255.255.252
-
-Rip
-R1
-192.168.1.0
-10.1.1.0
-
-R2
-10.1.1.0
-10.2.2.0
-
-R3
-10.2.2.0
-192.168.3.0
-
-R2:-
-Router>en
-Router#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R2(config)#host R2
-R2(config)#ip domain-name is.com
-R2(config)#username admin secret abc
-R2(config-line)#line vty 0 4
-R2(config-line)#login local
-R2(config-line)#transport input ssh
-R2(config-line)#crypto key generate rsa
-How many bits in the modulus [512]: 1024
-R2(config)#ip ssh time-out 90
-*Mar 1 1:29:45.393: %SSH-5-ENABLED: SSH 1.99 has been enabled
-R2(config)#ip ssh authentication-retries 2
-R2(config)#ip ssh version 2
-R2(config)#exit
-R2#
-
-in pc1 check ssh -l admin 10.2.2.2
-password abc
-exit
-
-R3
-Router>show version
-
-en
-conf t
-host R3
-license boot module c1900 technology-package securityk9
-yes
-exit
-
-R3#write
-R3#reload
-
-R3>en
-R3#conf t
-R3(config)#zone security IN-ZONE
-R3(config-sec-zone)#exit
-R3(config)#zone security OUT-ZONE
-R3(config-sec-zone)#exit
-R3(config)#access-list 101 permit ip 192.168.3.0 0.0.0.255 any
-R3(config)#class-map type inspect match-all IN-NET-CLASS-MAP
-R3(config-cmap)#match access-group 101
-R3(config-cmap)#exit
-R3(config)#policy-map type inspect IN-2-OUT-PMAP
-R3(config-pmap)#class type inspect IN-NET-CLASS-MAP
-R3(config-pmap-c)#inspect
-R3(config-pmap-c)#exit
-R3(config-pmap)#exit
-R3(config)#zone-pair security IN-2-OUT-2PAIR source IN-ZONE destination OUT-ZONE
-R3(config-zone-pair)#service-policy type inspect IN-2-OUT-PMAP
-R3(config-zone-pair)#exit
-R3(config)#int g0/0
-R3(config-if)#zone-member security IN-ZONE
-R3(config-if)#int s0/0/0
-R3(config-if)#zone-member security OUT-ZONE
-R3(config-if)#exit
-
-output:- pc 1 - ping 192.168.1.3
-ssh -l admin 10.2.2.2
-
-
-Practical No 7 :- Configure apply and verify extended numbered ACL
-2 pcs 
-3 switches 2960
-1 router 2911
-
-Adressing 
-R1
-G0/0 - 10.101.117.49 255.255.255.248 
-G0/1 - 10.101.117.33 255.255.255.240 
-G0/2 - 10.101.117.1 255.255.255.224 
-
-PC A - 10.101.117.51 255.255.255.248 10.101.117.49
-PC B - 10.101.117.35 255.255.255.240 10.101.117.33
-SWA - 10.101.117.50 255.255.255.248 10.101.117.49
-SWB - 10.101.117.34 255.255.255.240 10.101.117.33
-SWC - 10.101.117.2 255.255.255.224 10.101.117.1 
-
-R1
-Router>en
-Router#conf t
-Router(config)#host R1
-R1(config)#int g0/0
-R1(config-if)#ip address 10.101.117.49 255.255.255.248
-R1(config-if)#no shut
-
-R1(config)#int g0/1
-R1(config-if)#ip address 10.101.117.33 255.255.255.240
-R1(config-if)#no shut
-
-R1(config)#int g0/2
-R1(config-if)#ip address 10.101.117.1 255.255.255.248
-R1(config-if)#no shut
-
-S1 
-Switch#en
-Switch#conf t
-Switch(config)#host S1
-S1(config)#interface vlan 1
-S1(config-if)#ip address 10.101.117.50 255.255.255.248
-S1(config-if)#no shut
-
-S1(config-if)#exit
-S1(config)#ip default-gateway 10.101.117.49
-S1(config)#exit
-
-S2
-Switch>en
-Switch#conf t
-Switch(config)#host S2
-S2(config)#interface vlan 1
-S2(config-if)#ip address 10.101.117.34 255.255.255.240
-S2(config-if)#no shut
-
-S2(config-if)#exit
-S2(config)#ip default-gateway 10.101.117.33
-S2(config)#exit
-
-S3
-Switch>
-Switch>en
-Switch#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Switch(config)#host S3
-S3(config)#interface vlan 1
-S3(config-if)#ip address 10.101.117.2 255.255.255.224
-S3(config-if)#no shut
-
-S3(config-if)#exit
-S3(config)#ip default-gateway 10.101.117.1
-S3(config)#exit
-
-extended configuration
-S3#en
-S3#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-S3(config)#username admin password abc
-S3(config)#line vty 0 4
-S3(config-line)#login local
-S3(config-line)#exit
-S3(config)#
-
-R1
-Router>en
-Router#conf t
-Router(config)#access-list 199 permit tcp 10.101.117.32 0.0.0.15 10.101.117.0 0.0.0.31 eq telnet
-Router(config)#access-list 199 permit icmp any any
-Router(config)#int g0/2
-Router(config-if)#ip access-group 199 out
-Router(config-if)#exit
-
-output
-ping each other ip addresses in PC 1 and 2
-
-Practical No 8 :- Configure ACL to allow acess to routers R1, R2 and R3 to only be permitted from PC-C the management station PC-C is also used for connectivity testing to PC-A which is a server providing DNS, SMTP ,FTP and Https servers.
-
-Turn off each router (R1, R2, and R3), drag the HWIC-2T module into the empty slot of each router, and turn them on again. We add the HWIC-2T module so the router gets serial ports for connecting to other routers.
-
-1 server - 3 router 1941 - 2 switches 2960 
-
-PC-A  192.168.1.2 255.255.255.0 192.168.1.1 
-PC-C  192.168.3.2 255.255.255.0 192.168.3.1  
-
-Addressing 
-R1
-G0/1- 192.168.1.1 255.255.255.0 
-S0/1/0 - 10.1.1.1 255.255.255.252
-R2
-S0/1/0 - 10.1.1.2 255.255.255.252 
-S0/1/1 - 10.2.2.2 255.255.255.252 
-R3
-G0/1 - 192.168.3.1 255.255.255.0 
-S0/1/0 - 10.2.2.1 255.255.255.252 
-
-RIP
-R1
-en
-conf t
-Router(config)#host R1
-R1(config)#ip route 192.168.2.0 255.255.255.0 10.1.1.2
-R1(config)#ip route 192.168.3.0 255.255.255.0 10.1.1.2
-
-R2
-Router(config)#host R2
-R2(config)#ip route 192.168.1.0 255.255.255.0 10.1.1.1
-R2(config)#ip route 192.168.3.0 255.255.255.0 10.2.2.1
-
-R3
-Router(config)#host R3
-R3(config)#ip route 192.168.1.0 255.255.255.0 10.2.2.2
-R3(config)#ip route 192.168.2.0 255.255.255.0 10.2.2.2
-
-Routers configuration
-R1
-R1>en
-R1#conf t
-R1(config)#access-list 10 permit 192.168.3.3
-R1(config)#access-list 10 deny any
-R1(config)#line vty 0 4
-R1(config-line)#access-class 10 in
-R1(config-line)#password abc
-R1(config-line)#login
-R1(config-line)#exit
-
-R2
-R2#en
-R2#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-R2(config)#access-list 10 permit 192.168.3.3
-R2(config)#access-list 10 deny any
-R2(config)#line vty 0 4
-R2(config-line)#access-class 10 in
-R2(config-line)#password abc
-R2(config-line)#login
-R2(config-line)#exit
-R2(config)#interface loopback 0
-R2(config-if)#ip address 192.168.2.1 255.255.255.0
-R2(config-if)#exit
-R2(config)#
-
-R3
-R3>en
-R3#conf t
-R3(config)#access-list 10 permit 192.168.3.3
-R3(config)#access-list 10 deny any
-R3(config)#line vty 0 4
-R3(config-line)#access-class 10 in
-R3(config-line)#password abc
-R3(config-line)#login
-R3(config-line)#exit
-
-Output - ping 192.168.1.3 from pc c
-	 ping 192.168.2.1 from pc c
+1. Compare Two Strings and Check Substring
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        String a = "Hello World";
+        String b = "Hello";
+
+        System.out.println(a.equals(b));
+        System.out.println(a.contains(b));
+    }
+}
+
+
+2. Detect Character Encoding of a Text File
+
+import java.io.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        FileInputStream f = new FileInputStream("test.txt");
+        byte[] b = new byte[f.available()];
+        f.read(b);
+
+        String s = new String(b, "UTF-8");
+        System.out.println("Encoding: UTF-8");
+
+        f.close();
+    }
+}
+
+3. Append Multiple Strings Using StringBuilder
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 3; i++) {
+            sb.append(sc.nextLine()).append(" ");
+        }
+
+        System.out.println(sb);
+    }
+}
+
+4. Split a Paragraph into Sentences
+
+class Main {
+    public static void main(String[] args) {
+        String p = "I love Java. It is easy. Java is useful.";
+        String[] s = p.split("(?<=[.!?])\\s+");
+
+        for (String x : s) {
+            System.out.println(x);
+        }
+    }
+}
+
+5. Convert a Date Object into a Specific String Format
+
+import java.text.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Date d = new Date();
+        SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+
+        System.out.println(f.format(d));
+    }
+}
+
+6. Insert a Substring at a Specific Position Using StringBuilder
+
+class Main {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder("HelloWorld");
+
+        sb.insert(5, " ");
+
+        System.out.println(sb);
+    }
+}
+
+
+7. Remove Null Values from an Array of Strings
+
+class Main {
+    public static void main(String[] args) {
+        String[] a = {"Java", null, "Python", null, "C++"};
+
+        for (String s : a) {
+            if (s != null) {
+                System.out.println(s);
+            }
+        }
+    }
+}
+
+plo2 1. Find All Occurrences of a Pattern Using Pattern and Matcher
+
+import java.util.regex.*;
+
+class Main {
+    public static void main(String[] args) {
+        String s = "Java is easy. Java is useful.";
+        Pattern p = Pattern.compile("Java");
+        Matcher m = p.matcher(s);
+
+        while (m.find()) {
+            System.out.println("Found at: " + m.start());
+        }
+    }
+}
+
+
+2. Count Vowels Using the Character Class
+
+class Main {
+    public static void main(String[] args) {
+        String s = "Hello World";
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = Character.toLowerCase(s.charAt(i));
+
+            if (ch == 'a' || ch == 'e' || ch == 'i' ||
+                ch == 'o' || ch == 'u') {
+                count++;
+            }
+        }
+
+        System.out.println("Vowels: " + count);
+    }
+}
+
+3. Check Palindrome Using StringBuffer
+
+class Main {
+    public static void main(String[] args) {
+        String s = "madam";
+        StringBuffer sb = new StringBuffer(s);
+
+        if (s.equals(sb.reverse().toString())) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not Palindrome");
+        }
+    }
+}
+
+plo3 1. ListIterator — Print List Forward and Backward
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Mango");
+        list.add("Banana");
+
+        ListIterator<String> it = list.listIterator();
+
+        System.out.println("Forward:");
+        while (it.hasNext())
+            System.out.println(it.next());
+
+        System.out.println("Backward:");
+        while (it.hasPrevious())
+            System.out.println(it.previous());
+    }
+}
+
+
+2. Set and Iterator — Print Items Forward and Backward
+
+A HashSet does not maintain order or support backward traversal directly. Use LinkedHashSet to preserve insertion order, then convert it to a list for reverse printing.
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Set<String> set = new LinkedHashSet<>();
+        set.add("Apple");
+        set.add("Mango");
+        set.add("Banana");
+
+        Iterator<String> it = set.iterator();
+
+        System.out.println("Forward:");
+        while (it.hasNext())
+            System.out.println(it.next());
+
+        List<String> list = new ArrayList<>(set);
+        Collections.reverse(list);
+
+        System.out.println("Backward:");
+        for (String s : list)
+            System.out.println(s);
+    }
+}
+
+3. Set Interface — Add, Insert, Remove and Search Items
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Set<String> s1 = new HashSet<>();
+
+        // a. Add items
+        s1.add("Apple");
+        s1.add("Mango");
+        s1.add("Banana");
+        System.out.println("Set: " + s1);
+
+        // b. Insert items of one set into another
+        Set<String> s2 = new HashSet<>();
+        s2.add("Orange");
+        s2.add("Grapes");
+        s1.addAll(s2);
+        System.out.println("After adding another set: " + s1);
+
+        // c. Remove an item
+        s1.remove("Mango");
+        System.out.println("After removal: " + s1);
+
+        // d. Search an item
+        System.out.println("Apple found: " + s1.contains("Apple"));
+    }
+}
+
+plo4 1. Map Interface Operations
+
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Map<Integer, String> m1 = new HashMap<>();
+
+        // a. Add items
+        m1.put(1, "Apple");
+        m1.put(2, "Mango");
+        m1.put(3, "Banana");
+
+        // b. Remove item
+        m1.remove(3);
+
+        // c. Search key
+        System.out.println("Key exists: " + m1.containsKey(1));
+
+        // d. Get value
+        System.out.println("Value: " + m1.get(1));
+
+        // e. Insert one map into another
+        Map<Integer, String> m2 = new HashMap<>();
+        m2.put(4, "Orange");
+        m2.put(5, "Grapes");
+        m1.putAll(m2);
+
+        // f. Print all keys and values
+        for (Map.Entry<Integer, String> e : m1.entrySet()) {
+            System.out.println(e.getKey() + " = " + e.getValue());
+        }
+    }
+}
+
+2. Lambda Expression to Add Two Numbers
+
+interface Add {
+    int sum(int a, int b);
+}
+
+class Main {
+    public static void main(String[] args) {
+        Add obj = (a, b) -> a + b;
+        System.out.println("Sum = " + obj.sum(10, 20));
+    }
+}
+
+
+3(a). Lambda Expression to Convert Fahrenheit to Celsius
+Formula: C = (F - 32) * 5/9
+
+interface Temperature {
+    double convert(double f);
+}
+
+class Main {
+    public static void main(String[] args) {
+        Temperature t = f -> (f - 32) * 5 / 9;
+        System.out.println("Celsius = " + t.convert(98.6));
+    }
+}
+
+3(b). Lambda Expression to Convert Kilometers to Meters
+Formula: 1 kilometer = 1000 meters.
+
+interface Distance {
+    double convert(double km);
+}
+
+class Main {
+    public static void main(String[] args) {
+        Distance d = km -> km * 1000;
+        System.out.println("Meters = " + d.convert(5));
+    }
+}
